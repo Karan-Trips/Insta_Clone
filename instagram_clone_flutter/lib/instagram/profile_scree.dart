@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:practice_widgets/genrated/assets/assets.dart';
 import 'package:practice_widgets/widgets/screen_utils.dart';
 import 'package:practice_widgets/widgets/story_widget.dart';
 // ignore: depend_on_referenced_packages
@@ -18,33 +19,110 @@ class ProfileScreen extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: false,
+            centerTitle: false,
             backgroundColor: Colors.black,
-            title: const Text(
-              'usernmae123',
-              style: TextStyle(fontWeight: FontWeight.bold),
+            title: GestureDetector(
+              onTap: () {
+                showModalBottomSheet(
+                    context: context,
+                    showDragHandle: true,
+                    backgroundColor: Colors.blueGrey.shade900,
+                    builder: (context) {
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: Colors.black38,
+                                  borderRadius: BorderRadius.circular(10.r)),
+                              child: Column(
+                                children: [
+                                  CheckboxListTile(
+                                    value: true,
+                                    onChanged: (val) {},
+                                    activeColor: Colors.blue,
+                                    checkboxShape: const StadiumBorder(),
+                                    title: Row(
+                                      children: [
+                                        const CircleAvatar(
+                                          backgroundImage:
+                                              AssetImage(Assets.assetsImgCat),
+                                        ).wrapPaddingRight(10.w),
+                                        const Text(
+                                          "Karan_5299",
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ],
+                                    ),
+                                  ).wrapPaddingVertical(10),
+                                  ListTile(
+                                    onTap: () {},
+                                    leading: Container(
+                                      height: 40.h,
+                                      width: 40.w,
+                                      decoration: const BoxDecoration(
+                                          color: Colors.black38,
+                                          shape: BoxShape.circle),
+                                      child: const Icon(
+                                        Icons.add,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    title: const Text(
+                                      "Add Instagram Account",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ).wrapPaddingVertical(10),
+                                ],
+                              )).wrapPaddingSymmetric(horizontal: 10),
+                          Container(
+                            height: 32.h,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                border:
+                                    Border.all(width: 1.w, color: Colors.grey),
+                                borderRadius: BorderRadius.circular(50.r),
+                                color: Colors.transparent),
+                            child: const Center(
+                              child: Text(
+                                "Go to Account Center",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ).wrapPaddingSymmetric(
+                              horizontal: 10.w, vertical: 10.h)
+                        ],
+                      );
+                    });
+              },
+              child: const Row(
+                children: [
+                  Text(
+                    'Karan_5299',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                  Icon(Icons.arrow_drop_down_outlined, color: Colors.white),
+                ],
+              ),
             ),
             actions: [
               Row(
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Icon(
-                      Icons.add_box_outlined,
+                  const Icon(
+                    Icons.add_box_outlined,
+                    size: 30,
+                  ).wrapPaddingRight(15),
+                  GestureDetector(
+                    onTap: () {},
+                    child: const Icon(
+                      Icons.table_rows_rounded,
                       size: 30,
                     ),
                   ),
-                  InkWell(
-                    onTap: () {},
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.table_rows_rounded,
-                        size: 30,
-                      ),
-                    ),
-                  ),
                 ],
-              )
+              ).wrapPaddingRight(20.w)
             ],
           ),
           backgroundColor: Colors.black,
@@ -118,7 +196,7 @@ class ProfileScreen extends StatelessWidget {
               const Row(
                 children: [
                   Text(
-                    'Daniele Lucca',
+                    'K_a_R_a_N',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 17,

@@ -36,143 +36,145 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            const SizedBox(height: 200),
-            Column(
-              children: [
-                const Image(
-                  height: 60,
-                  width: 180,
-                  image: AssetImage(Assets.assetsImgLogo),
-                ),
-                const SizedBox(height: 15),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: TextFormField(
-                    controller: _usernameController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(11),
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              const SizedBox(height: 200),
+              Column(
+                children: [
+                  const Image(
+                    height: 60,
+                    width: 180,
+                    image: AssetImage(Assets.assetsImgLogo),
+                  ),
+                  const SizedBox(height: 15),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: TextFormField(
+                      controller: _usernameController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(11),
+                        ),
+                        fillColor: Colors.grey.shade700,
+                        filled: true,
+                        hintStyle: const TextStyle(color: Colors.grey),
+                        hintText: 'Phone number, email or username',
                       ),
-                      fillColor: Colors.grey.shade700,
-                      filled: true,
-                      hintStyle: const TextStyle(color: Colors.grey),
-                      hintText: 'Phone number, email or username',
+                      style: const TextStyle(color: Colors.white),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your username';
+                        }
+                        return null;
+                      },
                     ),
-                    style: const TextStyle(color: Colors.white),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your username';
-                      }
-                      return null;
-                    },
                   ),
-                ),
-                const SizedBox(height: 15),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: TextFormField(
-                    controller: _passwordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(11),
+                  const SizedBox(height: 15),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: TextFormField(
+                      controller: _passwordController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(11),
+                        ),
+                        fillColor: Colors.grey.shade700,
+                        filled: true,
+                        hintStyle: const TextStyle(color: Colors.grey),
+                        hintText: 'Password',
                       ),
-                      fillColor: Colors.grey.shade700,
-                      filled: true,
-                      hintStyle: const TextStyle(color: Colors.grey),
-                      hintText: 'Password',
+                      style: const TextStyle(color: Colors.white),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your password';
+                        }
+                        return null;
+                      },
                     ),
-                    style: const TextStyle(color: Colors.white),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your password';
-                      }
-                      return null;
-                    },
                   ),
-                ),
-                const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.only(right: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'Forgotten password?',
-                            style: TextStyle(color: Colors.blue),
-                          ))
-                    ],
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                            onPressed: () {},
+                            child: const Text(
+                              'Forgotten password?',
+                              style: TextStyle(color: Colors.blue),
+                            ))
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                InkWell(
-                    onTap: _login,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius: BorderRadius.circular(5)),
-                          child: const Center(
-                              child: Text(
-                            'Login',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ))),
-                    )),
-                const SizedBox(height: 37),
-                TextButton.icon(
-                    iconAlignment: IconAlignment.start,
-                    icon:
-                        const Icon(Icons.facebook_rounded, color: Colors.blue),
-                    onPressed: () {},
-                    label: const Text("Login with Facebook",
-                        style: TextStyle(color: Colors.blue))),
-              ],
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 25),
-              child: Text(
-                "Or",
-                softWrap: true,
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                  const SizedBox(height: 20),
+                  InkWell(
+                      onTap: _login,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                                color: Colors.blue,
+                                borderRadius: BorderRadius.circular(5)),
+                            child: const Center(
+                                child: Text(
+                              'Login',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ))),
+                      )),
+                  const SizedBox(height: 37),
+                  TextButton.icon(
+                      iconAlignment: IconAlignment.start,
+                      icon: const Icon(Icons.facebook_rounded,
+                          color: Colors.blue),
+                      onPressed: () {},
+                      label: const Text("Login with Facebook",
+                          style: TextStyle(color: Colors.blue))),
+                ],
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  "Don't have an account? ",
-                  style: TextStyle(color: Colors.white),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 25),
+                child: Text(
+                  "Or",
+                  softWrap: true,
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
                 ),
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const RegisterScreen(),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Don't have an account? ",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const RegisterScreen(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      " Sign up",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
                       ),
-                    );
-                  },
-                  child: const Text(
-                    " Sign up",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
