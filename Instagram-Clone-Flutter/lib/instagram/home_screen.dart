@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const SizedBox(
           height: 50,
           width: 120,
-          child: Image(image: AssetImage('assets/img/logo.png')),
+          child: Image(image: AssetImage(Assets.assetsImgLogo)),
         ),
         actions: const [
           Padding(

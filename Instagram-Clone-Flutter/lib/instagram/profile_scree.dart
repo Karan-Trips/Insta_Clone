@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:practice_widgets/instagram/login_screen.dart';
 import 'package:practice_widgets/widgets/screen_utils.dart';
 import 'package:practice_widgets/widgets/story_widget.dart';
 // ignore: depend_on_referenced_packages
@@ -35,13 +34,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                   InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const LoginScreen(),
-                        ),
-                      );
-                    },
+                    onTap: () {},
                     child: const Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Icon(
