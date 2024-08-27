@@ -1,4 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:practice_widgets/firebase_services/auth_service.dart';
 import 'package:practice_widgets/genrated/assets/assets.dart';
 import 'package:practice_widgets/instagram/main_screen.dart';
 import 'package:practice_widgets/instagram/register_screen.dart';
@@ -13,22 +17,26 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final email = TextEditingController();
+  final password = TextEditingController();
   @override
   void dispose() {
-    _usernameController.dispose();
-    _passwordController.dispose();
     super.dispose();
+    email.dispose();
+    password.dispose();
   }
 
-  void _login() {
+  void _login() async {
     if (_formKey.currentState!.validate()) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => const MainScreen(),
-        ),
-      );
+      await Authentication()
+          .Login(email: email.text, password: password.text)
+          .then((val) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const MainScreen(),
+          ),
+        );
+      });
     }
   }
 
@@ -53,10 +61,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextFormField(
-                      controller: _usernameController,
+                      controller: email,
+                      keyboardType: TextInputType.emailAddress,
+                      autocorrect: true,
+                      autofillHints: const [AutofillHints.email],
+                      textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(11),
+                          borderRadius: BorderRadius.circular(11.r),
                         ),
                         fillColor: Colors.grey.shade700,
                         filled: true,
@@ -76,7 +88,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextFormField(
-                      controller: _passwordController,
+                      controller: password,
+                      keyboardType: TextInputType.visiblePassword,
+                      autocorrect: true,
+                      autofillHints: const [AutofillHints.password],
                       obscureText: true,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(

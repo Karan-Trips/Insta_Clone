@@ -1,15 +1,29 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:practice_widgets/firebase_services/firestore.dart';
+import 'package:practice_widgets/firebase_services/model/user_model.dart';
 import 'package:practice_widgets/genrated/assets/assets.dart';
 import 'package:practice_widgets/widgets/screen_utils.dart';
 import 'package:practice_widgets/widgets/story_widget.dart';
-// ignore: depend_on_referenced_packages
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key, required this.id});
+  final String id;
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   final List _stories = [];
 
-  ProfileScreen({super.key});
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -126,302 +140,318 @@ class ProfileScreen extends StatelessWidget {
             ],
           ),
           backgroundColor: Colors.black,
-          body: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 10.w, bottom: 10.h),
-                    child: CircleAvatar(
-                        radius: 40.r,
-                        backgroundImage:
-                            const AssetImage('assets/img/cat.jpg')),
-                  ),
-                  const Row(
-                    children: [
-                      Column(
-                        children: [
-                          Text(
-                            '10',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: 20),
-                          ),
-                          Text(
-                            'Posts',
-                            style: TextStyle(color: Colors.white, fontSize: 15),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const Column(
-                    children: [
-                      Text(
-                        '130',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 20),
-                      ),
-                      Text(
-                        'Followers',
-                        style: TextStyle(color: Colors.white, fontSize: 15),
-                      ),
-                    ],
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(right: 26.0),
-                    child: Column(
+          body: FutureBuilder(
+              future: Firebase_Firestor().getUser(UID: widget.id),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                Usermodel snap = snapshot.data as Usermodel;
+                // print('${snapshot.data}');
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          '405',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 20),
+                        Padding(
+                          padding: EdgeInsets.only(left: 10.w, bottom: 10.h),
+                          child: CircleAvatar(
+                              radius: 40.r,
+                              backgroundImage: NetworkImage(snap.profile)),
                         ),
-                        Text(
-                          'Following',
-                          style: TextStyle(color: Colors.white, fontSize: 15),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              //////////////////////////////////////////////////////////////////////
-              const Row(
-                children: [
-                  Text(
-                    'K_a_R_a_N',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ).wrapPaddingHorizontal(15.w),
-              SizedBox(height: 8.h),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'I welcome you to my profile, please do not stalk me.',
-                    softWrap: true,
-                    maxLines: 3,
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.sp,
-                    ),
-                  ),
-                  SizedBox(height: 8.h),
-                  Text(
-                    '• June 29, 2002',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14.sp,
-                    ),
-                  ),
-                  SizedBox(height: 4.h),
-                  Text(
-                    '• Jamnagar, India',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14.sp,
-                    ),
-                  ),
-                  SizedBox(height: 4.h),
-                  Text(
-                    '• Software Engineer',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14.sp,
-                    ),
-                  ),
-                ],
-              ).wrapPaddingSymmetric(horizontal: 16.w),
-              //////////////////////////////////////////////////////////
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 32.h,
-                      decoration: BoxDecoration(
-                          color: Colors.grey.shade700,
-                          borderRadius: BorderRadius.circular(8)),
-                      child: const Center(
-                          child: Text(
-                        'Edit Profile',
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      )),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      height: 32.h,
-                      decoration: BoxDecoration(
-                          color: Colors.grey.shade700,
-                          borderRadius: BorderRadius.circular(8)),
-                      child: const Center(
-                          child: Text(
-                        'Share Profile',
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      )),
-                    ).wrapPaddingHorizontal(10.w),
-                  ),
-                  Container(
-                    height: 30.h,
-                    width: 30.w,
-                    decoration: BoxDecoration(
-                        color: Colors.grey.shade700,
-                        borderRadius: BorderRadius.circular(8)),
-                    child: const Center(
-                      child: Icon(
-                        Icons.person_add,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ).wrapPaddingHorizontal(5.w),
-                ],
-              ).wrapPaddingSymmetric(horizontal: 16.w, vertical: 10),
-
-              ///////////////////////////////////////////////////////////////////////
-
-              _stories.isNotEmpty
-                  ? SizedBox(
-                      height: 120,
-                      child: ListView.builder(
-                          itemCount: _stories.length,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return StoryWidget(username: _stories[index]);
-                          }),
-                    )
-                  : Row(
-                      children: [
-                        Column(
+                        const Row(
                           children: [
-                            GestureDetector(
-                              onTap: () {},
-                              child: Container(
-                                height: 75.h,
-                                width: 75.w,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                        width: 1.w, color: Colors.white)),
-                                child: const Center(
-                                  child: Icon(
-                                    Icons.add,
-                                    color: Colors.white,
-                                  ),
+                            Column(
+                              children: [
+                                Text(
+                                  '10',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                      fontSize: 20),
                                 ),
-                              ).wrapPaddingBottom(5.h),
+                                Text(
+                                  'Posts',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 15),
+                                ),
+                              ],
                             ),
-                            Text(
-                              "New",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12.sp,
-                              ),
-                            )
                           ],
                         ),
+                        const Column(
+                          children: [
+                            Text(
+                              '130',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  fontSize: 20),
+                            ),
+                            Text(
+                              'Followers',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 15),
+                            ),
+                          ],
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(right: 26.0),
+                          child: Column(
+                            children: [
+                              Text(
+                                '405',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 20),
+                              ),
+                              Text(
+                                'Following',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 15),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
-                    ).wrapPaddingLeft(16.w),
+                    ),
+                    //////////////////////////////////////////////////////////////////////
+                    Row(
+                      children: [
+                        Text(
+                          snap.username,
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ).wrapPaddingHorizontal(15.w),
+                    SizedBox(height: 8.h),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          snap.bio,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.sp,
+                          ),
+                        ),
+                        SizedBox(height: 8.h),
+                        Text(
+                          '• June 29, 2002',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14.sp,
+                          ),
+                        ),
+                        SizedBox(height: 4.h),
+                        Text(
+                          '• Jamnagar, India',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14.sp,
+                          ),
+                        ),
+                        SizedBox(height: 4.h),
+                        Text(
+                          '• Software Engineer',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14.sp,
+                          ),
+                        ),
+                      ],
+                    ).wrapPaddingSymmetric(horizontal: 16.w),
+                    //////////////////////////////////////////////////////////
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            height: 32.h,
+                            decoration: BoxDecoration(
+                                color: Colors.grey.shade700,
+                                borderRadius: BorderRadius.circular(8)),
+                            child: const Center(
+                                child: Text(
+                              'Edit Profile',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                          ),
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 32.h,
+                            decoration: BoxDecoration(
+                                color: Colors.grey.shade700,
+                                borderRadius: BorderRadius.circular(8)),
+                            child: const Center(
+                                child: Text(
+                              'Share Profile',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                          ).wrapPaddingHorizontal(10.w),
+                        ),
+                        Container(
+                          height: 30.h,
+                          width: 30.w,
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade700,
+                              borderRadius: BorderRadius.circular(8)),
+                          child: const Center(
+                            child: Icon(
+                              Icons.person_add,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ).wrapPaddingHorizontal(5.w),
+                      ],
+                    ).wrapPaddingSymmetric(horizontal: 16.w, vertical: 10),
 
-              const TabBar(
-                  indicatorColor: Colors.white,
-                  dividerHeight: 0,
-                  tabs: [
-                    Tab(
-                      icon: Icon(
-                        Icons.grid_on_outlined,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Tab(
-                      icon: Icon(
-                        Icons.video_library_outlined,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Tab(
-                      icon: FaIcon(
-                        FontAwesomeIcons.circleUser,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ]),
+                    ///////////////////////////////////////////////////////////////////////
 
-              const Expanded(
-                child: TabBarView(
-                  children: [
-                    Center(
-                      child: Column(
+                    _stories.isNotEmpty
+                        ? SizedBox(
+                            height: 120,
+                            child: ListView.builder(
+                                itemCount: _stories.length,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  return StoryWidget(username: _stories[index]);
+                                }),
+                          )
+                        : Row(
+                            children: [
+                              Column(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {},
+                                    child: Container(
+                                      height: 75.h,
+                                      width: 75.w,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                              width: 1.w, color: Colors.white)),
+                                      child: const Center(
+                                        child: Icon(
+                                          Icons.add,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ).wrapPaddingBottom(5.h),
+                                  ),
+                                  Text(
+                                    "New",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12.sp,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ).wrapPaddingLeft(16.w),
+
+                    const TabBar(
+                        indicatorColor: Colors.white,
+                        dividerHeight: 0,
+                        tabs: [
+                          Tab(
+                            icon: Icon(
+                              Icons.grid_on_outlined,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Tab(
+                            icon: Icon(
+                              Icons.video_library_outlined,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Tab(
+                            icon: FaIcon(
+                              FontAwesomeIcons.circleUser,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ]),
+
+                    const Expanded(
+                      child: TabBarView(
                         children: [
-                          SizedBox(
-                            height: 50,
+                          Center(
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 50,
+                                ),
+                                Icon(
+                                  Icons.camera_alt_outlined,
+                                  color: Colors.white,
+                                  size: 60,
+                                ),
+                                Text(
+                                  "No Posts Yet",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
                           ),
-                          Icon(
-                            Icons.camera_alt_outlined,
-                            color: Colors.white,
-                            size: 60,
+                          Center(
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 50,
+                                ),
+                                Icon(
+                                  Icons.person_add,
+                                  color: Colors.white,
+                                  size: 60,
+                                ),
+                                Text(
+                                  "Photos and videos of you",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
                           ),
-                          Text(
-                            "No Posts Yet",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Center(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 50,
-                          ),
-                          Icon(
-                            Icons.person_add,
-                            color: Colors.white,
-                            size: 60,
-                          ),
-                          Text(
-                            "Photos and videos of you",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Center(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 50,
-                          ),
-                          Icon(
-                            Icons.camera_alt_outlined,
-                            color: Colors.white,
-                            size: 60,
-                          ),
-                          Text(
-                            "No Posts Yet",
-                            style: TextStyle(color: Colors.white),
+                          Center(
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 50,
+                                ),
+                                Icon(
+                                  Icons.camera_alt_outlined,
+                                  color: Colors.white,
+                                  size: 60,
+                                ),
+                                Text(
+                                  "No Posts Yet",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
                     ),
                   ],
-                ),
-              ),
-            ],
-          ),
+                );
+              }),
         ));
   }
 }
