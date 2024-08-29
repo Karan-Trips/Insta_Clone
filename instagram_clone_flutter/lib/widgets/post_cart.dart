@@ -1,33 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:practice_widgets/instagram/authStore/auth_store.dart';
 import 'package:practice_widgets/instagram/model/model_post.dart';
 import 'package:practice_widgets/widgets/circle_story.dart';
-
 import '../screens/comment_sheet.dart';
 
-class PostCart extends StatefulWidget {
+class PostCart extends StatelessWidget {
   final Post post;
+
   const PostCart({super.key, required this.post});
-
-  @override
-  // ignore: library_private_types_in_public_api
-  _PostCartState createState() => _PostCartState();
-}
-
-class _PostCartState extends State<PostCart> {
-  bool isLiked = false;
-  bool isSaved = false;
-
-  void toggleLike() {
-    setState(() {
-      isLiked = !isLiked;
-    });
-  }
-
-  void toggleSave() {
-    setState(() {
-      isSaved = !isSaved;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +25,7 @@ class _PostCartState extends State<PostCart> {
                   const CircleStory(),
                   const SizedBox(width: 8),
                   Text(
-                    widget.post.userName,
+                    post.userName,
                     style: const TextStyle(color: Colors.white, fontSize: 15),
                   ),
                 ],
@@ -58,7 +39,7 @@ class _PostCartState extends State<PostCart> {
         ),
         ///////////////////////////////////////////////////////////////////////////
         Image.asset(
-          widget.post.imageName,
+          post.imageName,
           fit: BoxFit.cover,
         ),
         ///////////////////////////////////////////////////////////////////////////
@@ -69,13 +50,17 @@ class _PostCartState extends State<PostCart> {
             children: [
               Row(
                 children: [
-                  IconButton(
-                    icon: Icon(
-                      isLiked ? Icons.favorite : Icons.favorite_outline_rounded,
-                      color: isLiked ? Colors.red : Colors.white,
-                      size: 30,
+                  Observer(
+                    builder: (_) => IconButton(
+                      icon: Icon(
+                        mainScreen.isLiked
+                            ? Icons.favorite
+                            : Icons.favorite_outline_rounded,
+                        color: mainScreen.isLiked ? Colors.red : Colors.white,
+                        size: 30,
+                      ),
+                      onPressed: mainScreen.toggleLike,
                     ),
-                    onPressed: toggleLike,
                   ),
                   const SizedBox(width: 13),
                   GestureDetector(
@@ -104,13 +89,15 @@ class _PostCartState extends State<PostCart> {
                   ),
                 ],
               ),
-              IconButton(
-                icon: Icon(
-                  isSaved ? Icons.bookmark : Icons.bookmark_border,
-                  color: Colors.white,
-                  size: 30,
+              Observer(
+                builder: (_) => IconButton(
+                  icon: Icon(
+                    mainScreen.isSaved ? Icons.bookmark : Icons.bookmark_border,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                  onPressed: mainScreen.toggleSave,
                 ),
-                onPressed: toggleSave,
               ),
             ],
           ),
@@ -119,7 +106,7 @@ class _PostCartState extends State<PostCart> {
         Padding(
           padding: const EdgeInsets.only(left: 12.0),
           child: Text(
-            widget.post.likes.toString(),
+            post.likes.toString(),
             style: const TextStyle(color: Colors.white),
           ),
         ),

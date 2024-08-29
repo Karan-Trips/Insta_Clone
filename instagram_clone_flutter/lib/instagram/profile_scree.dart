@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:practice_widgets/firebase_services/firestore.dart';
@@ -50,73 +48,64 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               decoration: BoxDecoration(
                                   color: Colors.black38,
                                   borderRadius: BorderRadius.circular(10.r)),
-                              child: Column(
-                                children: [
-                                  CheckboxListTile(
-                                    value: true,
-                                    onChanged: (val) {},
-                                    activeColor: Colors.blue,
-                                    checkboxShape: const StadiumBorder(),
-                                    title: Row(
-                                      children: [
-                                        const CircleAvatar(
-                                          backgroundImage:
-                                              AssetImage(Assets.assetsImgCat),
-                                        ).wrapPaddingRight(10.w),
-                                        const Text(
-                                          "Karan_5299",
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                      ],
-                                    ),
-                                  ).wrapPaddingVertical(10),
-                                  ListTile(
-                                    onTap: () {},
-                                    leading: Container(
-                                      height: 40.h,
-                                      width: 40.w,
-                                      decoration: const BoxDecoration(
-                                          color: Colors.black38,
-                                          shape: BoxShape.circle),
-                                      child: const Icon(
-                                        Icons.add,
-                                        color: Colors.white,
+                              child: Column(children: [
+                                CheckboxListTile(
+                                  value: true,
+                                  onChanged: (val) {},
+                                  activeColor: Colors.blue,
+                                  checkboxShape: const StadiumBorder(),
+                                  title: Row(
+                                    children: [
+                                      const CircleAvatar(
+                                        backgroundImage:
+                                            AssetImage(Assets.assetsImgCat),
+                                      ).wrapPaddingRight(10.w),
+                                      const Text(
+                                        "Karan_5299",
+                                        style: TextStyle(color: Colors.white),
                                       ),
-                                    ),
-                                    title: const Text(
-                                      "Add Instagram Account",
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ).wrapPaddingVertical(10),
-                                ],
-                              )).wrapPaddingSymmetric(horizontal: 10),
+                                    ],
+                                  ),
+                                ).wrapPaddingVertical(10),
+                                ListTile(
+                                        onTap: () {},
+                                        leading: Container(
+                                            height: 40.h,
+                                            width: 40.w,
+                                            decoration: const BoxDecoration(
+                                                color: Colors.black38,
+                                                shape: BoxShape.circle),
+                                            child: const Icon(Icons.add,
+                                                color: Colors.white)),
+                                        title: const Text(
+                                            "Add Instagram Account",
+                                            style:
+                                                TextStyle(color: Colors.white)))
+                                    .wrapPaddingVertical(10)
+                              ])).wrapPaddingSymmetric(horizontal: 10),
                           Container(
-                            height: 32.h,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                border:
-                                    Border.all(width: 1.w, color: Colors.grey),
-                                borderRadius: BorderRadius.circular(50.r),
-                                color: Colors.transparent),
-                            child: const Center(
-                              child: Text(
-                                "Go to Account Center",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          ).wrapPaddingSymmetric(
-                              horizontal: 10.w, vertical: 10.h)
+                                  height: 32.h,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 1.w, color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(50.r),
+                                      color: Colors.transparent),
+                                  child: const Center(
+                                      child: Text("Go to Account Center",
+                                          style:
+                                              TextStyle(color: Colors.white))))
+                              .wrapPaddingSymmetric(
+                                  horizontal: 10.w, vertical: 10.h)
                         ],
                       );
                     });
               },
               child: const Row(
                 children: [
-                  Text(
-                    'Karan_5299',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.white),
-                  ),
+                  Text('Karan_5299',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white)),
                   Icon(Icons.arrow_drop_down_outlined, color: Colors.white),
                 ],
               ),
@@ -124,16 +113,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             actions: [
               Row(
                 children: [
-                  const Icon(
-                    Icons.add_box_outlined,
-                    size: 30,
-                  ).wrapPaddingRight(15),
+                  const Icon(Icons.add_box_outlined, size: 30)
+                      .wrapPaddingRight(15),
                   GestureDetector(
                     onTap: () {},
-                    child: const Icon(
-                      Icons.table_rows_rounded,
-                      size: 30,
-                    ),
+                    child: const Icon(Icons.table_rows_rounded, size: 30),
                   ),
                 ],
               ).wrapPaddingRight(20.w)
@@ -272,53 +256,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ],
                     ).wrapPaddingSymmetric(horizontal: 16.w),
                     //////////////////////////////////////////////////////////
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            height: 32.h,
-                            decoration: BoxDecoration(
-                                color: Colors.grey.shade700,
-                                borderRadius: BorderRadius.circular(8)),
-                            child: const Center(
-                                child: Text(
-                              'Edit Profile',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            )),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            height: 32.h,
-                            decoration: BoxDecoration(
-                                color: Colors.grey.shade700,
-                                borderRadius: BorderRadius.circular(8)),
-                            child: const Center(
-                                child: Text(
-                              'Share Profile',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            )),
-                          ).wrapPaddingHorizontal(10.w),
-                        ),
-                        Container(
-                          height: 30.h,
-                          width: 30.w,
-                          decoration: BoxDecoration(
-                              color: Colors.grey.shade700,
-                              borderRadius: BorderRadius.circular(8)),
-                          child: const Center(
-                            child: Icon(
-                              Icons.person_add,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ).wrapPaddingHorizontal(5.w),
-                      ],
-                    ).wrapPaddingSymmetric(horizontal: 16.w, vertical: 10),
+                    const Edit_profile_buttons()
+                        .wrapPaddingSymmetric(horizontal: 16.w, vertical: 10),
 
                     ///////////////////////////////////////////////////////////////////////
 
@@ -453,5 +392,60 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 );
               }),
         ));
+  }
+}
+
+class Edit_profile_buttons extends StatelessWidget {
+  const Edit_profile_buttons({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            height: 32.h,
+            decoration: BoxDecoration(
+                color: Colors.grey.shade700,
+                borderRadius: BorderRadius.circular(8)),
+            child: const Center(
+                child: Text(
+              'Edit Profile',
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            )),
+          ),
+        ),
+        Expanded(
+          child: Container(
+            height: 32.h,
+            decoration: BoxDecoration(
+                color: Colors.grey.shade700,
+                borderRadius: BorderRadius.circular(8)),
+            child: const Center(
+                child: Text(
+              'Share Profile',
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            )),
+          ).wrapPaddingHorizontal(10.w),
+        ),
+        Container(
+          height: 30.h,
+          width: 30.w,
+          decoration: BoxDecoration(
+              color: Colors.grey.shade700,
+              borderRadius: BorderRadius.circular(8)),
+          child: const Center(
+            child: Icon(
+              Icons.person_add,
+              color: Colors.white,
+            ),
+          ),
+        ).wrapPaddingHorizontal(5.w),
+      ],
+    );
   }
 }

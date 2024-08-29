@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:mobx/mobx.dart';
 import 'package:practice_widgets/screens/comment.dart';
+import 'package:practice_widgets/utils/image_picker.dart';
 
 part 'auth_store.g.dart';
 
@@ -8,6 +11,18 @@ class MainStore = _MainScreenStore with _$MainStore;
 abstract class _MainScreenStore with Store {
   @observable
   int selectedIndex = 0;
+  @observable
+  File? imageFile;
+
+  @action
+  Future<void> pickImage(String source) async {
+    final picker = ImagePickerr();
+    final pickedFile = await picker.uploadImage('gallery');
+
+    if (pickedFile != null) {
+      imageFile = File(pickedFile.path);
+    }
+  }
 
   @action
   void setSelectedIndex(int index) {
@@ -43,6 +58,21 @@ abstract class _MainScreenStore with Store {
 
   @observable
   Comment? selectedComment;
+  @observable
+  bool isLiked = false;
+
+  @observable
+  bool isSaved = false;
+
+  @action
+  void toggleLike() {
+    isLiked = !isLiked;
+  }
+
+  @action
+  void toggleSave() {
+    isSaved = !isSaved;
+  }
 
   @action
   void addReply(Comment? comment, Comment reply) {

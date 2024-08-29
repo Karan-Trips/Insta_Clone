@@ -3,14 +3,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:practice_widgets/firebase_services/auth_service.dart';
 import 'package:practice_widgets/genrated/assets/assets.dart';
+import 'package:practice_widgets/instagram/authStore/auth_store.dart';
 import 'package:practice_widgets/instagram/login_screen.dart';
 import 'package:practice_widgets/utils/dialog_box.dart';
-
-import '../utils/image_picker.dart';
-
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
@@ -60,37 +59,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    File? imagefilee =
-                        await ImagePickerr().uploadImage('gallery');
-                    if (imagefilee != null) {
-                      setState(() {
-                        _imageFile = imagefilee;
-                      });
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text('No image selected.'),
-                      ));
+                    await mainScreen.pickImage('gallery');
+                    if (mainScreen.imageFile == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('No image selected.'),
+                        ),
+                      );
                     }
                   },
-                  child: CircleAvatar(
-                    radius: 60.r,
-                    backgroundColor: Colors.grey,
-                    child: _imageFile == null
-                        ? CircleAvatar(
-                            radius: 55.r,
-                            backgroundImage:
-                                const AssetImage(Assets.assetsImgProfile),
-                            backgroundColor: Colors.grey.shade200,
-                          )
-                        : CircleAvatar(
-                            radius: 55.r,
-                            backgroundImage: Image.file(
-                              _imageFile!,
-                              fit: BoxFit.cover,
-                            ).image,
-                            backgroundColor: Colors.grey.shade200,
-                          ),
-                  ),
+                  child: Observer(builder: (_) {
+                    return CircleAvatar(
+                      radius: 60.r,
+                      backgroundColor: Colors.grey,
+                      child: _imageFile == null
+                          ? CircleAvatar(
+                              radius: 55.r,
+                              backgroundImage:
+                                  const AssetImage(Assets.assetsImgProfile),
+                              backgroundColor: Colors.grey.shade200,
+                            )
+                          : CircleAvatar(
+                              radius: 55.r,
+                              backgroundImage: Image.file(
+                                _imageFile!,
+                                fit: BoxFit.cover,
+                              ).image,
+                              backgroundColor: Colors.grey.shade200,
+                            ),
+                    );
+                  }),
                 ),
                 const SizedBox(height: 20),
                 ..._buildTextFields(),

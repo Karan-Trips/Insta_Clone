@@ -63,6 +63,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: TextFormField(
                       controller: email,
                       keyboardType: TextInputType.emailAddress,
+                      enableSuggestions: true,
+                      enableIMEPersonalizedLearning: true,
                       autocorrect: true,
                       autofillHints: const [AutofillHints.email],
                       textInputAction: TextInputAction.next,
@@ -89,6 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextFormField(
                       controller: password,
+                      textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.visiblePassword,
                       autocorrect: true,
                       autofillHints: const [AutofillHints.password],
@@ -119,13 +122,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         TextButton(
                             onPressed: () {},
-                            child: const Text(
-                              'Forgotten password?',
-                              style: TextStyle(color: Colors.blue),
-                            ))
+                            child: const Text('Forgotten password?',
+                                style: TextStyle(color: Colors.blue)))
                       ],
                     ),
-                  ),
+                  ), 
                   const SizedBox(height: 20),
                   InkWell(
                       onTap: _login,
@@ -137,12 +138,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                 color: Colors.blue,
                                 borderRadius: BorderRadius.circular(5)),
                             child: const Center(
-                                child: Text(
-                              'Login',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ))),
+                                child: Text('Login',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold)))),
                       )),
                   const SizedBox(height: 37),
                   TextButton.icon(

@@ -1,0 +1,6 @@
+projectKey=insta-clone
+serverUrl=http://localhost:9000
+serverVersion=10.6.0.92116
+dashboardUrl=http://localhost:9000/dashboard?id=insta-clone
+ceTaskId=152095ac-d010-4a6c-a627-c26b52ba2e6f
+ceTaskUrl=http://localhost:9000/api/ce/task?id=152095ac-d010-4a6c-a627-c26b52ba2e6f

@@ -27,9 +27,7 @@ class _MainScreenState extends State<MainScreen> {
       const SearchScreen(),
       ReelsScreen(),
       const ShopScreen(),
-      ProfileScreen(
-        id: _auth.currentUser!.uid,
-      )
+      ProfileScreen(id: _auth.currentUser!.uid)
     ];
 
     return Observer(builder: (_) {
@@ -76,7 +74,7 @@ class _MainScreenState extends State<MainScreen> {
             backgroundColor: Colors.black,
             unselectedItemColor: Colors.white,
             showUnselectedLabels: true,
-            iconSize: 30,
+            iconSize: 30.w,
             currentIndex: mainScreen.selectedIndex,
             selectedItemColor: Colors.white,
             onTap: mainScreen.setSelectedIndex,

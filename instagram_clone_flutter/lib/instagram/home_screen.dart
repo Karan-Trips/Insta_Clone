@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:practice_widgets/genrated/assets/assets.dart';
 import 'package:practice_widgets/instagram/model/model_post.dart';
 import 'package:practice_widgets/widgets/post_cart.dart';
+import 'package:practice_widgets/widgets/screen_utils.dart';
 import 'package:practice_widgets/widgets/story_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -93,15 +95,65 @@ class _HomeScreenState extends State<HomeScreen> {
       body: ListView(
         children: [
           SizedBox(
-            height: 120,
+            height: 120.h,
             child: ListView.builder(
               shrinkWrap: true,
               itemCount: _stories.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
-                return StoryWidget(
-                  username: _stories[index],
-                );
+                return Row(
+                  children: [
+                    if (index == 0)
+                      Stack(
+                        children: [
+                          Column(
+                            children: [
+                              SizedBox(
+                                height: 80.h,
+                                width: 80.w,
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(
+                                                  'https://cdn.pixabay.com/photo/2018/07/29/23/05/woman-3571298_960_720.jpg')),
+                                          shape: BoxShape.circle),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Container(
+                                          decoration: const BoxDecoration(
+                                              color: Colors.blue,
+                                              shape: BoxShape.circle),
+                                          child: Icon(
+                                            Icons.add,
+                                            size: 20.w,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ).wrapPaddingTop(50.h),
+                                  ],
+                                ),
+                              ).wrapPaddingAll(8.w),
+                              Text(
+                                'Your Story',
+                                style: TextStyle(
+                                    fontSize: 13.sp,
+                                    color: Colors.grey.shade500),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ).wrapPaddingRight(10.w),
+                    StoryWidget(
+                      username: _stories[index],
+                    ),
+                  ],
+                ).wrapPaddingLeft(16.w);
               },
             ),
           ),

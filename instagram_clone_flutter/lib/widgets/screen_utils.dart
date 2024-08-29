@@ -98,17 +98,12 @@ extension WidgetX on Widget {
   }
 
   Widget wrapPaddingAll(double padding) {
-    return Padding(
-      padding: EdgeInsets.all(padding),
-      child: this,
-    );
+    return Padding(padding: EdgeInsets.all(padding), child: this);
   }
 
   Widget wrapPaddingHorizontal(double padding) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: padding),
-      child: this,
-    );
+        padding: EdgeInsets.symmetric(horizontal: padding), child: this);
   }
 
   Widget wrapPaddingVertical(double padding) {
