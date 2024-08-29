@@ -256,7 +256,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ],
                     ).wrapPaddingSymmetric(horizontal: 16.w),
                     //////////////////////////////////////////////////////////
-                    const Edit_profile_buttons()
+                    const Editprofilebuttons()
                         .wrapPaddingSymmetric(horizontal: 16.w, vertical: 10),
 
                     ///////////////////////////////////////////////////////////////////////
@@ -395,8 +395,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 }
 
-class Edit_profile_buttons extends StatelessWidget {
-  const Edit_profile_buttons({
+class Editprofilebuttons extends StatelessWidget {
+  const Editprofilebuttons({
     super.key,
   });
 

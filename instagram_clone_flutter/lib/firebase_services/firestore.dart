@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -55,8 +55,8 @@ class Firebase_Firestor {
     required String caption,
     required String location,
   }) async {
-    var uid = Uuid().v4();
-    DateTime data = new DateTime.now();
+    var uid = const Uuid().v4();
+    DateTime data =  DateTime.now();
     Usermodel user = await getUser();
     await _firebaseFirestore.collection('posts').doc(uid).set({
       'postImage': postImage,
@@ -97,7 +97,7 @@ class Firebase_Firestor {
     required String type,
     required String uidd,
   }) async {
-    var uid = Uuid().v4();
+    var uid = const Uuid().v4();
     Usermodel user = await getUser();
     await _firebaseFirestore
         .collection(type)
