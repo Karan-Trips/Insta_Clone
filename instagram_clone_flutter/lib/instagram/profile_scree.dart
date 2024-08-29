@@ -396,9 +396,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 }
 
 class Editprofilebuttons extends StatelessWidget {
-  const Editprofilebuttons({
-    super.key,
-  });
+  const Editprofilebuttons({super.key});
 
   @override
   Widget build(BuildContext context) {
