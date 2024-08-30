@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:practice_widgets/firebase_services/firestore.dart';
 import 'package:practice_widgets/firebase_services/model/user_model.dart';
 import 'package:practice_widgets/genrated/assets/assets.dart';
+import 'package:practice_widgets/instagram/login_screen.dart';
 import 'package:practice_widgets/widgets/screen_utils.dart';
 import 'package:practice_widgets/widgets/story_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,6 +23,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
+  }
+
+  Future<void> logout(BuildContext context) async {
+    const storage = FlutterSecureStorage();
+    await storage.delete(key: 'isLoggedIn');
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
+    );
   }
 
   @override
@@ -117,8 +128,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       .wrapPaddingRight(15),
                   GestureDetector(
                     onTap: () {},
-                    child: const Icon(Icons.table_rows_rounded, size: 30),
+                    child: const Icon(Icons.table_rows_rounded, size: 30)
+                        .wrapPaddingRight(15.w),
                   ),
+                  GestureDetector(
+                      onTap: () {
+                        logout(context);
+                      },
+                      child: const Icon(Icons.logout, size: 30)
+                          .wrapPaddingRight(5.w)),
                 ],
               ).wrapPaddingRight(20.w)
             ],
@@ -403,19 +421,16 @@ class Editprofilebuttons extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: Container(
-            height: 32.h,
-            decoration: BoxDecoration(
-                color: Colors.grey.shade700,
-                borderRadius: BorderRadius.circular(8)),
-            child: const Center(
-                child: Text(
-              'Edit Profile',
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-            )),
-          ),
-        ),
+            child: Container(
+                height: 32.h,
+                decoration: BoxDecoration(
+                    color: Colors.grey.shade700,
+                    borderRadius: BorderRadius.circular(8)),
+                child: const Center(
+                    child: Text('Edit Profile',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold))))),
         Expanded(
           child: Container(
             height: 32.h,

@@ -7,15 +7,19 @@ import 'package:practice_widgets/firebase_services/storage.dart';
 
 class Authentication {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  Future<void> Login({
+
+  Future<String> login({
     required String email,
     required String password,
   }) async {
     try {
       await _auth.signInWithEmailAndPassword(
           email: email.trim(), password: password.trim());
-    } on FirebaseException catch (e) {
-      throw Exception(e.message.toString());
+      return "success";
+    } on FirebaseAuthException catch (e) {
+      return e.message.toString();
+    } catch (e) {
+      return "Something went wrong";
     }
   }
 

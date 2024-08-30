@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:practice_widgets/firebase_services/auth_service.dart';
 import 'package:practice_widgets/genrated/assets/assets.dart';
 import 'package:practice_widgets/instagram/main_screen.dart';
@@ -26,17 +27,27 @@ class _LoginScreenState extends State<LoginScreen> {
     password.dispose();
   }
 
+  final storage = const FlutterSecureStorage();
   void _login() async {
     if (_formKey.currentState!.validate()) {
-      await Authentication()
-          .Login(email: email.text, password: password.text)
-          .then((val) {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const MainScreen(),
-          ),
-        );
-      });
+      try {
+        String result = await Authentication()
+            .login(email: email.text, password: password.text);
+
+        if (result == "success") {
+          await storage.write(key: 'email', value: email.text);
+          await storage.write(key: 'password', value: password.text);
+          await storage.write(key: 'isLoggedIn', value: 'true');
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const MainScreen()));
+        } else {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('Login failed: $result')));
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Login failed: ${e.toString()}')));
+      }
     }
   }
 
