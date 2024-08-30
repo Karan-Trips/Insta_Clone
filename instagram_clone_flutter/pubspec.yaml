@@ -54,6 +54,9 @@ dependencies:
   flutter_dotenv: ^5.1.0
   flutter_native_splash: ^2.4.1
   flutter_secure_storage: ^4.2.1
+  flutter_launcher_icons: ^0.13.1
+  animations: ^2.0.11
+  skeletonizer: ^1.4.2
 
 dev_dependencies:
   flutter_test:
@@ -91,6 +94,13 @@ flutter_assets:
   assets_path: assets/img/
   output_path: lib/genrated/assets/
   filename: assets.dart 
+
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/img/icon.png"
+  min_sdk_android: 21 
 
 
 

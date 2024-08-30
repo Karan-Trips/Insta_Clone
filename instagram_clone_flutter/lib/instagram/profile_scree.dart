@@ -5,9 +5,11 @@ import 'package:practice_widgets/firebase_services/firestore.dart';
 import 'package:practice_widgets/firebase_services/model/user_model.dart';
 import 'package:practice_widgets/genrated/assets/assets.dart';
 import 'package:practice_widgets/instagram/login_screen.dart';
+import 'package:practice_widgets/widgets/edit_profile_button.dart';
 import 'package:practice_widgets/widgets/screen_utils.dart';
 import 'package:practice_widgets/widgets/story_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key, required this.id});
@@ -31,6 +33,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // ignore: use_build_context_synchronously
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (context) => const LoginScreen()),
+    );
+  }
+
+  void _openImageDialog(BuildContext context, String imageUrl) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          child: GestureDetector(
+            onTap: () => Navigator.of(context).pop(),
+            child: Container(
+              height: 280.h,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                      image: NetworkImage(imageUrl), fit: BoxFit.cover)),
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -146,7 +169,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
               future: Firebase_Firestor().getUser(UID: widget.id),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
-                  return const Center(child: CircularProgressIndicator());
+                  return Skeletonizer(
+                    enabled: true,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 10.w, bottom: 10.h),
+                      child: CircleAvatar(
+                        radius: 40.r,
+                        backgroundColor: Colors.grey.shade300,
+                      ),
+                    ),
+                  );
                 }
                 Usermodel snap = snapshot.data as Usermodel;
                 // print('${snapshot.data}');
@@ -159,9 +191,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(left: 10.w, bottom: 10.h),
-                          child: CircleAvatar(
-                              radius: 40.r,
-                              backgroundImage: NetworkImage(snap.profile)),
+                          child: GestureDetector(
+                            onTap: () {
+                              _openImageDialog(context, snap.profile);
+                            },
+                            child: CircleAvatar(
+                                radius: 40.r,
+                                backgroundImage: NetworkImage(snap.profile)),
+                          ),
                         ),
                         const Row(
                           children: [
@@ -410,55 +447,5 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 );
               }),
         ));
-  }
-}
-
-class Editprofilebuttons extends StatelessWidget {
-  const Editprofilebuttons({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-            child: Container(
-                height: 32.h,
-                decoration: BoxDecoration(
-                    color: Colors.grey.shade700,
-                    borderRadius: BorderRadius.circular(8)),
-                child: const Center(
-                    child: Text('Edit Profile',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold))))),
-        Expanded(
-          child: Container(
-            height: 32.h,
-            decoration: BoxDecoration(
-                color: Colors.grey.shade700,
-                borderRadius: BorderRadius.circular(8)),
-            child: const Center(
-                child: Text(
-              'Share Profile',
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-            )),
-          ).wrapPaddingHorizontal(10.w),
-        ),
-        Container(
-          height: 30.h,
-          width: 30.w,
-          decoration: BoxDecoration(
-              color: Colors.grey.shade700,
-              borderRadius: BorderRadius.circular(8)),
-          child: const Center(
-            child: Icon(
-              Icons.person_add,
-              color: Colors.white,
-            ),
-          ),
-        ).wrapPaddingHorizontal(5.w),
-      ],
-    );
   }
 }

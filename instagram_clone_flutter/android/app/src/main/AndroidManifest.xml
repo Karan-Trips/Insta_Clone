@@ -21,9 +21,9 @@
         android:usesCleartextTraffic="false"
         android:requestLegacyExternalStorage="true"
       
-        android:label="practice_widgets"
+        android:label="Instagram"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">y
+        android:icon="@mipmap/launcher_icon">y
         <activity
             android:name=".MainActivity"
             android:exported="true"
