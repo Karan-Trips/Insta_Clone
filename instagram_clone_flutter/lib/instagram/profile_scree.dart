@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -11,15 +12,16 @@ import 'package:practice_widgets/widgets/story_widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key, required this.id});
+@RoutePage()
+class ProfileScreenPage extends StatefulWidget {
+  const ProfileScreenPage({super.key, required this.id});
   final String id;
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<ProfileScreenPage> createState() => _ProfileScreenPageState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenPageState extends State<ProfileScreenPage> {
   final List _stories = [];
 
   @override
@@ -64,89 +66,89 @@ class _ProfileScreenState extends State<ProfileScreen> {
         length: 3,
         child: Scaffold(
           appBar: AppBar(
-            automaticallyImplyLeading: false,
-            centerTitle: false,
-            backgroundColor: Colors.black,
-            title: GestureDetector(
-              onTap: () {
-                showModalBottomSheet(
-                    context: context,
-                    showDragHandle: true,
-                    backgroundColor: Colors.blueGrey.shade900,
-                    builder: (context) {
-                      return Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  color: Colors.black38,
-                                  borderRadius: BorderRadius.circular(10.r)),
-                              child: Column(children: [
-                                CheckboxListTile(
-                                  value: true,
-                                  onChanged: (val) {},
-                                  activeColor: Colors.blue,
-                                  checkboxShape: const StadiumBorder(),
-                                  title: Row(
-                                    children: [
-                                      const CircleAvatar(
-                                        backgroundImage:
-                                            AssetImage(Assets.assetsImgCat),
-                                      ).wrapPaddingRight(10.w),
-                                      const Text(
-                                        "Karan_5299",
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ],
-                                  ),
-                                ).wrapPaddingVertical(10),
-                                ListTile(
-                                        onTap: () {},
-                                        leading: Container(
-                                            height: 40.h,
-                                            width: 40.w,
-                                            decoration: const BoxDecoration(
-                                                color: Colors.black38,
-                                                shape: BoxShape.circle),
-                                            child: const Icon(Icons.add,
-                                                color: Colors.white)),
-                                        title: const Text(
-                                            "Add Instagram Account",
-                                            style:
-                                                TextStyle(color: Colors.white)))
-                                    .wrapPaddingVertical(10)
-                              ])).wrapPaddingSymmetric(horizontal: 10),
-                          Container(
-                                  height: 32.h,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          width: 1.w, color: Colors.grey),
-                                      borderRadius: BorderRadius.circular(50.r),
-                                      color: Colors.transparent),
-                                  child: const Center(
-                                      child: Text("Go to Account Center",
-                                          style:
-                                              TextStyle(color: Colors.white))))
-                              .wrapPaddingSymmetric(
-                                  horizontal: 10.w, vertical: 10.h)
-                        ],
-                      );
-                    });
-              },
-              child: const Row(
-                children: [
-                  Text('Karan_5299',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.white)),
-                  Icon(Icons.arrow_drop_down_outlined, color: Colors.white),
-                ],
+              automaticallyImplyLeading: false,
+              centerTitle: false,
+              backgroundColor: Colors.black,
+              title: GestureDetector(
+                onTap: () {
+                  showModalBottomSheet(
+                      context: context,
+                      showDragHandle: true,
+                      backgroundColor: Colors.blueGrey.shade900,
+                      builder: (context) {
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                    color: Colors.black38,
+                                    borderRadius: BorderRadius.circular(10.r)),
+                                child: Column(children: [
+                                  CheckboxListTile(
+                                    value: true,
+                                    onChanged: (val) {},
+                                    activeColor: Colors.blue,
+                                    checkboxShape: const StadiumBorder(),
+                                    title: Row(
+                                      children: [
+                                        const CircleAvatar(
+                                          backgroundImage:
+                                              AssetImage(Assets.assetsImgCat),
+                                        ).wrapPaddingRight(10.w),
+                                        const Text(
+                                          "Karan_5299",
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ],
+                                    ),
+                                  ).wrapPaddingVertical(10),
+                                  ListTile(
+                                          onTap: () {},
+                                          leading: Container(
+                                              height: 40.h,
+                                              width: 40.w,
+                                              decoration: const BoxDecoration(
+                                                  color: Colors.black38,
+                                                  shape: BoxShape.circle),
+                                              child: const Icon(Icons.add,
+                                                  color: Colors.white)),
+                                          title: const Text(
+                                              "Add Instagram Account",
+                                              style: TextStyle(
+                                                  color: Colors.white)))
+                                      .wrapPaddingVertical(10)
+                                ])).wrapPaddingSymmetric(horizontal: 10),
+                            Container(
+                                    height: 32.h,
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 1.w, color: Colors.grey),
+                                        borderRadius:
+                                            BorderRadius.circular(50.r),
+                                        color: Colors.transparent),
+                                    child: const Center(
+                                        child: Text("Go to Account Center",
+                                            style: TextStyle(
+                                                color: Colors.white))))
+                                .wrapPaddingSymmetric(
+                                    horizontal: 10.w, vertical: 10.h)
+                          ],
+                        );
+                      });
+                },
+                child: const Row(
+                  children: [
+                    Text('Karan_5299',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.white)),
+                    Icon(Icons.arrow_drop_down_outlined, color: Colors.white),
+                  ],
+                ),
               ),
-            ),
-            actions: [
-              Row(
-                children: [
+              actions: [
+                Row(children: [
                   const Icon(Icons.add_box_outlined, size: 30)
                       .wrapPaddingRight(15),
                   GestureDetector(
@@ -159,26 +161,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         logout(context);
                       },
                       child: const Icon(Icons.logout, size: 30)
-                          .wrapPaddingRight(5.w)),
-                ],
-              ).wrapPaddingRight(20.w)
-            ],
-          ),
+                          .wrapPaddingRight(5.w))
+                ]).wrapPaddingRight(20.w)
+              ]),
           backgroundColor: Colors.black,
           body: FutureBuilder(
               future: Firebase_Firestor().getUser(UID: widget.id),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return Skeletonizer(
-                    enabled: true,
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 10.w, bottom: 10.h),
-                      child: CircleAvatar(
-                        radius: 40.r,
-                        backgroundColor: Colors.grey.shade300,
-                      ),
-                    ),
-                  );
+                      enabled: true,
+                      child: Padding(
+                          padding: EdgeInsets.only(left: 10.w, bottom: 10.h),
+                          child: CircleAvatar(
+                              radius: 40.r,
+                              backgroundColor: Colors.grey.shade300)));
                 }
                 Usermodel snap = snapshot.data as Usermodel;
                 // print('${snapshot.data}');
@@ -269,47 +266,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ],
                     ).wrapPaddingHorizontal(15.w),
-                    SizedBox(height: 8.h),
+                    8.verticalSpace,
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          snap.bio,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.sp,
-                          ),
-                        ),
-                        SizedBox(height: 8.h),
-                        Text(
-                          '• June 29, 2002',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14.sp,
-                          ),
-                        ),
-                        SizedBox(height: 4.h),
-                        Text(
-                          '• Jamnagar, India',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14.sp,
-                          ),
-                        ),
-                        SizedBox(height: 4.h),
-                        Text(
-                          '• Software Engineer',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14.sp,
-                          ),
-                        ),
-                      ],
-                    ).wrapPaddingSymmetric(horizontal: 16.w),
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(snap.bio,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 16.sp)),
+                          8.verticalSpace,
+                          Text('• June 29, 2002',
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 14.sp)),
+                          4.verticalSpace,
+                          Text('• Jamnagar, India',
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 14.sp)),
+                          4.verticalSpace,
+                          Text('• Software Engineer',
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 14.sp))
+                        ]).wrapPaddingSymmetric(horizontal: 16.w),
                     //////////////////////////////////////////////////////////
                     const Editprofilebuttons()
                         .wrapPaddingSymmetric(horizontal: 16.w, vertical: 10),

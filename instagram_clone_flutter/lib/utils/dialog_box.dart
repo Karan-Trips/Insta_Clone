@@ -7,11 +7,12 @@ Future<void> dialogBuilder(BuildContext context, String message) {
       return AlertDialog(
         title: const Text(
           'Error',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.red),
         ),
         content: Text(
           message,
-          style: const TextStyle(fontSize: 20),
+          style: const TextStyle(fontSize: 20, color: Colors.black),
         ),
         actions: [
           TextButton(

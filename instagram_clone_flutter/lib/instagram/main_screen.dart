@@ -27,7 +27,7 @@ class _MainScreenState extends State<MainScreen> {
       const SearchScreen(),
       ReelsScreen(),
       const ShopScreen(),
-      ProfileScreen(id: _auth.currentUser!.uid)
+      ProfileScreenPage(id: _auth.currentUser!.uid)
     ];
 
     return Observer(builder: (_) {
@@ -43,7 +43,7 @@ class _MainScreenState extends State<MainScreen> {
             type: BottomNavigationBarType.fixed,
             items: <BottomNavigationBarItem>[
               const BottomNavigationBarItem(
-                  icon: Icon(Icons.home_outlined), 
+                  icon: Icon(Icons.home_outlined),
                   activeIcon: Icon(Icons.home),
                   label: '',
                   backgroundColor: Colors.black),

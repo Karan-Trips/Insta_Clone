@@ -4,7 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:practice_widgets/instagram/login_screen.dart';
-import 'package:practice_widgets/instagram/main_screen.dart'; // Import your MainScreen
+import 'package:practice_widgets/instagram/main_screen.dart';
+import 'package:toastification/toastification.dart'; // Import your MainScreen
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,13 +23,15 @@ class MyApp extends StatelessWidget {
       designSize: const Size(360, 690),
       minTextAdapt: true,
       builder: (context, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
+        return ToastificationWrapper(
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+              textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
+            ),
+            home: const AuthCheck(),
           ),
-          home: const AuthCheck(),
         );
       },
     );

@@ -17,9 +17,9 @@ class Authentication {
           email: email.trim(), password: password.trim());
       return "success";
     } on FirebaseAuthException catch (e) {
-      return e.message.toString();
+      return e.message ?? "Firebase Auth error";
     } catch (e) {
-      return "Something went wrong";
+      return "Something went wrong: ${e.toString()}";
     }
   }
 
@@ -43,33 +43,33 @@ class Authentication {
             email: email.trim(),
             password: password.trim(),
           );
-          // upload profile image on storage
-
-          if (profile != File('')) {
+          // upload profile image to storage
+          if (profile.existsSync()) {
             URL =
                 await StorageMethod().uploadImageToStorage('Profile', profile);
           } else {
-            URL = '';
+            URL = ''; // or provide a default URL if necessary
           }
 
-          // get information with firestor
-
+          // get information with Firestore
           await Firebase_Firestor().CreateUser(
             email: email,
             username: username,
             bio: bio,
-            profile: URL == ''
+            profile: URL.isEmpty
                 ? 'https://firebasestorage.googleapis.com/v0/b/instagram-8a227.appspot.com/o/person.png?alt=media&token=c6fcbe9d-f502-4aa1-8b4b-ec37339e78ab'
                 : URL,
           );
         } else {
-          throw Exception('password and confirm password should be same');
+          throw Exception('Password and confirm password should be the same.');
         }
       } else {
-        throw Exception('enter all the fields');
+        throw Exception('Please fill in all the fields.');
       }
     } on FirebaseException catch (e) {
-      throw Exception(e.message.toString());
+      throw Exception('Firebase error: ${e.message}');
+    } catch (e) {
+      throw Exception('Error: ${e.toString()}');
     }
   }
 }

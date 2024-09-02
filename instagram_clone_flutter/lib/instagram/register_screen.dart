@@ -5,11 +5,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:practice_widgets/firebase_services/auth_service.dart';
 import 'package:practice_widgets/genrated/assets/assets.dart';
 import 'package:practice_widgets/instagram/authStore/auth_store.dart';
 import 'package:practice_widgets/instagram/login_screen.dart';
 import 'package:practice_widgets/utils/dialog_box.dart';
+import 'package:toastification/toastification.dart';
+
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
@@ -24,6 +27,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final username = TextEditingController();
   final bio = TextEditingController();
   File? _imageFile;
+
   @override
   void dispose() {
     super.dispose();
@@ -32,6 +36,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
     passwordConfirme.dispose();
     username.dispose();
     bio.dispose();
+  }
+
+  void _showToast() {
+    Fluttertoast.showToast(
+        msg: "Registered Successfully",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 
   @override
@@ -72,26 +87,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     return CircleAvatar(
                       radius: 60.r,
                       backgroundColor: Colors.grey,
-                      child: _imageFile == null
+                      child: mainScreen.imageFile == null
                           ? CircleAvatar(
                               radius: 55.r,
                               backgroundImage:
                                   const AssetImage(Assets.assetsImgProfile),
                               backgroundColor: Colors.grey.shade200,
                             )
-                          : CircleAvatar(
-                              radius: 55.r,
-                              backgroundImage: Image.file(
-                                _imageFile!,
-                                fit: BoxFit.cover,
-                              ).image,
-                              backgroundColor: Colors.grey.shade200,
-                            ),
+                          : Observer(builder: (_) {
+                              return CircleAvatar(
+                                radius: 55.r,
+                                backgroundImage: Image.file(
+                                  mainScreen.imageFile!,
+                                  fit: BoxFit.cover,
+                                ).image,
+                                backgroundColor: Colors.grey.shade200,
+                              );
+                            }),
                     );
                   }),
                 ),
                 const SizedBox(height: 20),
-                ..._buildTextFields(),
+                _buildEmailField(),
+                const SizedBox(height: 15),
+                _buildUsernameField(),
+                const SizedBox(height: 15),
+                _buildBioField(),
+                const SizedBox(height: 15),
+                _buildPasswordField(),
+                const SizedBox(height: 15),
+                _buildConfirmPasswordField(),
                 const SizedBox(height: 15),
                 InkWell(
                   onTap: () async {
@@ -106,6 +131,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         profile: _imageFile ?? File(''),
                       )
                           .then((value) {
+                        Toastification().showCustom(builder: (context, op) {
+                          return const Text('Registered Successfully');
+                        });
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => const LoginScreen(),
@@ -162,6 +190,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ],
                 ),
+                20.verticalSpace,
+                GestureDetector(
+                    onTap: () {
+                      _showToast();
+                    },
+                    child: const Text(
+                      "asdas",
+                      style: TextStyle(color: Colors.white),
+                    )),
               ],
             ),
           ),
@@ -170,72 +207,86 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  List<Widget> _buildTextFields() {
-    final textFieldsData = [
-      {
-        'hintText': 'Email',
-        'controller': email,
-        'icon': Icons.email,
-        'obscureText': false,
-      },
-      {
-        'hintText': 'Username',
-        'controller': username,
-        'icon': Icons.person,
-        'obscureText': false,
-      },
-      {
-        'hintText': 'Bio',
-        'controller': bio,
-        'icon': Icons.info,
-        'obscureText': false,
-      },
-      {
-        'hintText': 'Password',
-        'controller': password,
-        'icon': Icons.lock,
-        'obscureText': true,
-      },
-      {
-        'hintText': 'Confirm Password',
-        'controller': passwordConfirme,
-        'icon': Icons.lock_outline,
-        'obscureText': true,
-      },
-    ];
-
-    return textFieldsData
-        .map((data) => Padding(
-              padding: const EdgeInsets.only(bottom: 15),
-              child: _buildTextField(
-                hintText: data['hintText'] as String,
-                controller: data['controller'] as TextEditingController,
-                icon: data['icon'] as IconData,
-                obscureText: data['obscureText'] as bool,
-              ),
-            ))
-        .toList();
+  Widget _buildEmailField() {
+    return TextFormField(
+      textInputAction: TextInputAction.next,
+      controller: email,
+      decoration: InputDecoration(
+          prefixIcon: const Icon(Icons.email, color: Colors.grey),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(11)),
+          fillColor: Colors.grey.shade700,
+          filled: true,
+          constraints: const BoxConstraints.tightFor(width: 327, height: 50),
+          hintStyle: const TextStyle(color: Colors.grey),
+          hintText: 'Email'),
+      style: const TextStyle(color: Colors.white),
+    );
   }
 
-  Widget _buildTextField({
-    required String hintText,
-    required TextEditingController controller,
-    required IconData icon,
-    bool obscureText = false,
-  }) {
-    return TextField(
-      controller: controller,
-      obscureText: obscureText,
+  Widget _buildUsernameField() {
+    return TextFormField(
+      textInputAction: TextInputAction.next,
+      controller: username,
       decoration: InputDecoration(
-        prefixIcon: Icon(icon, color: Colors.grey),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(11),
-        ),
+        prefixIcon: const Icon(Icons.person, color: Colors.grey),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(11)),
         fillColor: Colors.grey.shade700,
         filled: true,
         constraints: const BoxConstraints.tightFor(width: 327, height: 50),
         hintStyle: const TextStyle(color: Colors.grey),
-        hintText: hintText,
+        hintText: 'Username',
+      ),
+      style: const TextStyle(color: Colors.white),
+    );
+  }
+
+  Widget _buildBioField() {
+    return TextFormField(
+      controller: bio,
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+        prefixIcon: const Icon(Icons.info, color: Colors.grey),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(11)),
+        fillColor: Colors.grey.shade700,
+        filled: true,
+        constraints: const BoxConstraints.tightFor(width: 327, height: 50),
+        hintStyle: const TextStyle(color: Colors.grey),
+        hintText: 'Bio',
+      ),
+      style: const TextStyle(color: Colors.white),
+    );
+  }
+
+  Widget _buildPasswordField() {
+    return TextFormField(
+      textInputAction: TextInputAction.next,
+      controller: password,
+      obscureText: true,
+      decoration: InputDecoration(
+        prefixIcon: const Icon(Icons.lock, color: Colors.grey),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(11)),
+        fillColor: Colors.grey.shade700,
+        filled: true,
+        constraints: const BoxConstraints.tightFor(width: 327, height: 50),
+        hintStyle: const TextStyle(color: Colors.grey),
+        hintText: 'Password',
+      ),
+      style: const TextStyle(color: Colors.white),
+    );
+  }
+
+  Widget _buildConfirmPasswordField() {
+    return TextFormField(
+      controller: passwordConfirme,
+      obscureText: true,
+      decoration: InputDecoration(
+        prefixIcon: const Icon(Icons.lock_outline, color: Colors.grey),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(11)),
+        fillColor: Colors.grey.shade700,
+        filled: true,
+        constraints: const BoxConstraints.tightFor(width: 327, height: 50),
+        hintStyle: const TextStyle(color: Colors.grey),
+        hintText: 'Confirm Password',
       ),
       style: const TextStyle(color: Colors.white),
     );
